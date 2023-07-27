@@ -1,0 +1,29 @@
+.program output
+.side_set 1
+
+start:
+    out X, 32     side 0
+loop:
+    jmp X--, loop side 1
+    jmp start     side 0
+
+% c-sdk {
+
+void output_program_init(PIO pio, uint sm, uint offset, uint pin, float div) {
+
+    pio_sm_config c = output_program_get_default_config(offset);
+
+    pio_gpio_init(pio, pin);
+
+    //pio_sm_set_consecutive_pindirs(pio, sm, pin, 1, true);
+
+    pio_sm_set_sideset_pins(pio, sm, pin);
+
+    sm_config_set_out_shift(&c, true, true, 32);
+
+    sm_config_set_clkdiv(&c, div);
+
+    pio_sm_init(pio, sm, offset, &c);
+}
+
+%}
