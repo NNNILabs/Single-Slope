@@ -83,7 +83,8 @@ static inline pio_sm_config input_program_get_default_config(uint offset) {
 void input_program_init(PIO pio, uint sm, uint offset, uint pin, float div) {
     pio_sm_config c = output_program_get_default_config(offset);
     pio_gpio_init(pio, pin);
-    pio_sm_set_consecutive_pindirs(pio, sm, pin, 1, false);
+    //pio_sm_set_consecutive_pindirs(pio, sm, pin, 1, false);
+    sm_config_set_jmp_pin(&c, pin);
     sm_config_set_in_shift(&c, true, true, 32);
     sm_config_set_clkdiv(&c, div);
     pio_sm_init(pio, sm, offset, &c);

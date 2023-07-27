@@ -33,21 +33,21 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
  14 .comment      00000049  00000000  00000000  0000c5a8  2**0
                   CONTENTS, READONLY
- 15 .debug_info   0002a914  00000000  00000000  0000c5f1  2**0
+ 15 .debug_info   0002a94e  00000000  00000000  0000c5f1  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_abbrev 00007810  00000000  00000000  00036f05  2**0
+ 16 .debug_abbrev 00007810  00000000  00000000  00036f3f  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_loc    0001c013  00000000  00000000  0003e715  2**0
+ 17 .debug_loc    0001c04f  00000000  00000000  0003e74f  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_aranges 00001668  00000000  00000000  0005a728  2**3
+ 18 .debug_aranges 00001668  00000000  00000000  0005a7a0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_ranges 000053e0  00000000  00000000  0005bd90  2**3
+ 19 .debug_ranges 000053e0  00000000  00000000  0005be08  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_line   0001afc5  00000000  00000000  00061170  2**0
+ 20 .debug_line   0001afdc  00000000  00000000  000611e8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_str    000083fb  00000000  00000000  0007c135  2**0
+ 21 .debug_str    00008411  00000000  00000000  0007c1c4  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 22 .debug_frame  00002f2c  00000000  00000000  00084530  2**2
+ 22 .debug_frame  00002f2c  00000000  00000000  000845d8  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 C:/Users/vivek/Desktop/Projects/Single-Slope/SW/build/blink.elf:     file format elf32-littlearm
@@ -276,7 +276,7 @@ Disassembly of section .text:
 10000270:	20000ca8 	.word	0x20000ca8
 10000274:	20001a38 	.word	0x20001a38
 10000278:	1000264d 	.word	0x1000264d
-1000027c:	100004e5 	.word	0x100004e5
+1000027c:	100004e9 	.word	0x100004e9
 10000280:	10002609 	.word	0x10002609
 10000284:	00005657 	.word	0x00005657
 
@@ -460,60 +460,61 @@ Disassembly of section .text:
 
 1000041c <_Z18input_program_initP8pio_hw_tjjjf>:
 1000041c:	b5f0      	push	{r4, r5, r6, r7, lr}
-1000041e:	b089      	sub	sp, #36	; 0x24
-10000420:	0005      	movs	r5, r0
+1000041e:	b087      	sub	sp, #28
+10000420:	0006      	movs	r6, r0
 10000422:	000f      	movs	r7, r1
-10000424:	0016      	movs	r6, r2
+10000424:	0015      	movs	r5, r2
 10000426:	001c      	movs	r4, r3
 10000428:	2210      	movs	r2, #16
 1000042a:	2100      	movs	r1, #0
-1000042c:	a804      	add	r0, sp, #16
+1000042c:	a802      	add	r0, sp, #8
 1000042e:	f004 f9ef 	bl	10004810 <__wrap_memset>
 10000432:	2380      	movs	r3, #128	; 0x80
 10000434:	025b      	lsls	r3, r3, #9
-10000436:	9304      	str	r3, [sp, #16]
+10000436:	9302      	str	r3, [sp, #8]
 10000438:	23f8      	movs	r3, #248	; 0xf8
 1000043a:	025b      	lsls	r3, r3, #9
-1000043c:	9305      	str	r3, [sp, #20]
+1000043c:	9303      	str	r3, [sp, #12]
 1000043e:	2380      	movs	r3, #128	; 0x80
 10000440:	02db      	lsls	r3, r3, #11
-10000442:	9306      	str	r3, [sp, #24]
+10000442:	9304      	str	r3, [sp, #16]
 10000444:	23c0      	movs	r3, #192	; 0xc0
 10000446:	031b      	lsls	r3, r3, #12
-10000448:	9306      	str	r3, [sp, #24]
-1000044a:	1cb3      	adds	r3, r6, #2
-1000044c:	01f1      	lsls	r1, r6, #7
+10000448:	9304      	str	r3, [sp, #16]
+1000044a:	1cab      	adds	r3, r5, #2
+1000044c:	01ea      	lsls	r2, r5, #7
 1000044e:	031b      	lsls	r3, r3, #12
-10000450:	4319      	orrs	r1, r3
-10000452:	9105      	str	r1, [sp, #20]
+10000450:	431a      	orrs	r2, r3
+10000452:	9203      	str	r2, [sp, #12]
 10000454:	2380      	movs	r3, #128	; 0x80
 10000456:	059b      	lsls	r3, r3, #22
-10000458:	9307      	str	r3, [sp, #28]
+10000458:	9305      	str	r3, [sp, #20]
 1000045a:	4b1f      	ldr	r3, [pc, #124]	; (100004d8 <_Z18input_program_initP8pio_hw_tjjjf+0xbc>)
-1000045c:	4019      	ands	r1, r3
-1000045e:	9105      	str	r1, [sp, #20]
+1000045c:	401a      	ands	r2, r3
+1000045e:	9203      	str	r2, [sp, #12]
 10000460:	4b1e      	ldr	r3, [pc, #120]	; (100004dc <_Z18input_program_initP8pio_hw_tjjjf+0xc0>)
-10000462:	429d      	cmp	r5, r3
+10000462:	429e      	cmp	r6, r3
 10000464:	d033      	beq.n	100004ce <_Z18input_program_initP8pio_hw_tjjjf+0xb2>
 10000466:	2107      	movs	r1, #7
 10000468:	0020      	movs	r0, r4
 1000046a:	f000 f93d 	bl	100006e8 <gpio_set_function>
-1000046e:	2300      	movs	r3, #0
-10000470:	9300      	str	r3, [sp, #0]
-10000472:	3301      	adds	r3, #1
-10000474:	0022      	movs	r2, r4
-10000476:	0039      	movs	r1, r7
-10000478:	0028      	movs	r0, r5
-1000047a:	f006 ff95 	bl	100073a8 <pio_sm_set_consecutive_pindirs>
-1000047e:	9b06      	ldr	r3, [sp, #24]
-10000480:	9303      	str	r3, [sp, #12]
-10000482:	4a17      	ldr	r2, [pc, #92]	; (100004e0 <_Z18input_program_initP8pio_hw_tjjjf+0xc4>)
+1000046e:	9b03      	ldr	r3, [sp, #12]
+10000470:	9301      	str	r3, [sp, #4]
+10000472:	4b1b      	ldr	r3, [pc, #108]	; (100004e0 <_Z18input_program_initP8pio_hw_tjjjf+0xc4>)
+10000474:	9a01      	ldr	r2, [sp, #4]
+10000476:	4013      	ands	r3, r2
+10000478:	0624      	lsls	r4, r4, #24
+1000047a:	4323      	orrs	r3, r4
+1000047c:	9303      	str	r3, [sp, #12]
+1000047e:	9b04      	ldr	r3, [sp, #16]
+10000480:	9301      	str	r3, [sp, #4]
+10000482:	4a18      	ldr	r2, [pc, #96]	; (100004e4 <_Z18input_program_initP8pio_hw_tjjjf+0xc8>)
 10000484:	401a      	ands	r2, r3
 10000486:	23a0      	movs	r3, #160	; 0xa0
 10000488:	02db      	lsls	r3, r3, #11
 1000048a:	4313      	orrs	r3, r2
-1000048c:	9306      	str	r3, [sp, #24]
-1000048e:	980e      	ldr	r0, [sp, #56]	; 0x38
+1000048c:	9304      	str	r3, [sp, #16]
+1000048e:	980c      	ldr	r0, [sp, #48]	; 0x30
 10000490:	f004 f916 	bl	100046c0 <__wrap___aeabi_f2uiz>
 10000494:	b284      	uxth	r4, r0
 10000496:	2c00      	cmp	r4, #0
@@ -521,7 +522,7 @@ Disassembly of section .text:
 1000049a:	0020      	movs	r0, r4
 1000049c:	f004 f8e8 	bl	10004670 <__wrap___aeabi_ui2f>
 100004a0:	1c01      	adds	r1, r0, #0
-100004a2:	980e      	ldr	r0, [sp, #56]	; 0x38
+100004a2:	980c      	ldr	r0, [sp, #48]	; 0x30
 100004a4:	f004 f8bb 	bl	1000461e <__wrap___aeabi_fsub>
 100004a8:	2187      	movs	r1, #135	; 0x87
 100004aa:	05c9      	lsls	r1, r1, #23
@@ -531,13 +532,13 @@ Disassembly of section .text:
 100004b6:	021b      	lsls	r3, r3, #8
 100004b8:	0424      	lsls	r4, r4, #16
 100004ba:	431c      	orrs	r4, r3
-100004bc:	9404      	str	r4, [sp, #16]
-100004be:	ab04      	add	r3, sp, #16
-100004c0:	0032      	movs	r2, r6
+100004bc:	9402      	str	r4, [sp, #8]
+100004be:	ab02      	add	r3, sp, #8
+100004c0:	002a      	movs	r2, r5
 100004c2:	0039      	movs	r1, r7
-100004c4:	0028      	movs	r0, r5
+100004c4:	0030      	movs	r0, r6
 100004c6:	f006 ffc1 	bl	1000744c <pio_sm_init>
-100004ca:	b009      	add	sp, #36	; 0x24
+100004ca:	b007      	add	sp, #28
 100004cc:	bdf0      	pop	{r4, r5, r6, r7, pc}
 100004ce:	2106      	movs	r1, #6
 100004d0:	e7ca      	b.n	10000468 <_Z18input_program_initP8pio_hw_tjjjf+0x4c>
@@ -546,88 +547,88 @@ Disassembly of section .text:
 100004d6:	46c0      	nop			; (mov r8, r8)
 100004d8:	9fffffff 	.word	0x9fffffff
 100004dc:	50200000 	.word	0x50200000
-100004e0:	fe0affff 	.word	0xfe0affff
+100004e0:	e0ffffff 	.word	0xe0ffffff
+100004e4:	fe0affff 	.word	0xfe0affff
 
-100004e4 <main>:
-100004e4:	b5f0      	push	{r4, r5, r6, r7, lr}
-100004e6:	b087      	sub	sp, #28
-100004e8:	f004 fafc 	bl	10004ae4 <stdio_init_all>
-100004ec:	200f      	movs	r0, #15
-100004ee:	f001 fff5 	bl	100024dc <vreg_set_voltage>
-100004f2:	ab05      	add	r3, sp, #20
-100004f4:	aa04      	add	r2, sp, #16
-100004f6:	a903      	add	r1, sp, #12
-100004f8:	4829      	ldr	r0, [pc, #164]	; (100005a0 <main+0xbc>)
-100004fa:	f000 f89d 	bl	10000638 <check_sys_clock_khz>
-100004fe:	2800      	cmp	r0, #0
-10000500:	d103      	bne.n	1000050a <main+0x26>
-10000502:	4927      	ldr	r1, [pc, #156]	; (100005a0 <main+0xbc>)
-10000504:	4827      	ldr	r0, [pc, #156]	; (100005a4 <main+0xc0>)
-10000506:	f002 f91d 	bl	10002744 <panic>
-1000050a:	9a05      	ldr	r2, [sp, #20]
-1000050c:	9904      	ldr	r1, [sp, #16]
-1000050e:	9803      	ldr	r0, [sp, #12]
-10000510:	f000 f856 	bl	100005c0 <set_sys_clock_pll>
-10000514:	4c24      	ldr	r4, [pc, #144]	; (100005a8 <main+0xc4>)
-10000516:	2101      	movs	r1, #1
-10000518:	0020      	movs	r0, r4
-1000051a:	f006 ff0b 	bl	10007334 <pio_claim_unused_sm>
-1000051e:	0006      	movs	r6, r0
-10000520:	4922      	ldr	r1, [pc, #136]	; (100005ac <main+0xc8>)
-10000522:	0020      	movs	r0, r4
-10000524:	f006 ff24 	bl	10007370 <pio_add_program>
-10000528:	0002      	movs	r2, r0
-1000052a:	27fe      	movs	r7, #254	; 0xfe
-1000052c:	05bf      	lsls	r7, r7, #22
-1000052e:	9700      	str	r7, [sp, #0]
-10000530:	2300      	movs	r3, #0
-10000532:	0031      	movs	r1, r6
-10000534:	0020      	movs	r0, r4
-10000536:	f7ff fefd 	bl	10000334 <_Z19output_program_initP8pio_hw_tjjjf>
-1000053a:	6822      	ldr	r2, [r4, #0]
-1000053c:	2501      	movs	r5, #1
-1000053e:	002b      	movs	r3, r5
-10000540:	40b3      	lsls	r3, r6
-10000542:	439a      	bics	r2, r3
-10000544:	4313      	orrs	r3, r2
-10000546:	6023      	str	r3, [r4, #0]
-10000548:	4e19      	ldr	r6, [pc, #100]	; (100005b0 <main+0xcc>)
-1000054a:	0029      	movs	r1, r5
-1000054c:	0030      	movs	r0, r6
-1000054e:	f006 fef1 	bl	10007334 <pio_claim_unused_sm>
-10000552:	0004      	movs	r4, r0
-10000554:	4917      	ldr	r1, [pc, #92]	; (100005b4 <main+0xd0>)
-10000556:	0030      	movs	r0, r6
-10000558:	f006 ff0a 	bl	10007370 <pio_add_program>
-1000055c:	0002      	movs	r2, r0
-1000055e:	9700      	str	r7, [sp, #0]
-10000560:	002b      	movs	r3, r5
-10000562:	0021      	movs	r1, r4
-10000564:	0030      	movs	r0, r6
-10000566:	f7ff ff59 	bl	1000041c <_Z18input_program_initP8pio_hw_tjjjf>
-1000056a:	6833      	ldr	r3, [r6, #0]
-1000056c:	40a5      	lsls	r5, r4
-1000056e:	43ab      	bics	r3, r5
-10000570:	431d      	orrs	r5, r3
-10000572:	6035      	str	r5, [r6, #0]
-10000574:	4810      	ldr	r0, [pc, #64]	; (100005b8 <main+0xd4>)
-10000576:	f006 fe33 	bl	100071e0 <multicore_launch_core1>
-1000057a:	4b0b      	ldr	r3, [pc, #44]	; (100005a8 <main+0xc4>)
-1000057c:	685a      	ldr	r2, [r3, #4]
-1000057e:	0021      	movs	r1, r4
-10000580:	3108      	adds	r1, #8
-10000582:	2301      	movs	r3, #1
-10000584:	408b      	lsls	r3, r1
-10000586:	4213      	tst	r3, r2
-10000588:	d1f7      	bne.n	1000057a <main+0x96>
-1000058a:	008b      	lsls	r3, r1, #2
-1000058c:	4a06      	ldr	r2, [pc, #24]	; (100005a8 <main+0xc4>)
-1000058e:	5899      	ldr	r1, [r3, r2]
-10000590:	480a      	ldr	r0, [pc, #40]	; (100005bc <main+0xd8>)
-10000592:	f004 fa9b 	bl	10004acc <__wrap_printf>
-10000596:	2064      	movs	r0, #100	; 0x64
-10000598:	f001 fa32 	bl	10001a00 <sleep_ms>
-1000059c:	e7ed      	b.n	1000057a <main+0x96>
+100004e8 <main>:
+100004e8:	b5f0      	push	{r4, r5, r6, r7, lr}
+100004ea:	b087      	sub	sp, #28
+100004ec:	f004 fafa 	bl	10004ae4 <stdio_init_all>
+100004f0:	200f      	movs	r0, #15
+100004f2:	f001 fff3 	bl	100024dc <vreg_set_voltage>
+100004f6:	ab05      	add	r3, sp, #20
+100004f8:	aa04      	add	r2, sp, #16
+100004fa:	a903      	add	r1, sp, #12
+100004fc:	4828      	ldr	r0, [pc, #160]	; (100005a0 <main+0xb8>)
+100004fe:	f000 f89b 	bl	10000638 <check_sys_clock_khz>
+10000502:	2800      	cmp	r0, #0
+10000504:	d103      	bne.n	1000050e <main+0x26>
+10000506:	4926      	ldr	r1, [pc, #152]	; (100005a0 <main+0xb8>)
+10000508:	4826      	ldr	r0, [pc, #152]	; (100005a4 <main+0xbc>)
+1000050a:	f002 f91b 	bl	10002744 <panic>
+1000050e:	9a05      	ldr	r2, [sp, #20]
+10000510:	9904      	ldr	r1, [sp, #16]
+10000512:	9803      	ldr	r0, [sp, #12]
+10000514:	f000 f854 	bl	100005c0 <set_sys_clock_pll>
+10000518:	4c23      	ldr	r4, [pc, #140]	; (100005a8 <main+0xc0>)
+1000051a:	2101      	movs	r1, #1
+1000051c:	0020      	movs	r0, r4
+1000051e:	f006 ff09 	bl	10007334 <pio_claim_unused_sm>
+10000522:	0006      	movs	r6, r0
+10000524:	4921      	ldr	r1, [pc, #132]	; (100005ac <main+0xc4>)
+10000526:	0020      	movs	r0, r4
+10000528:	f006 ff22 	bl	10007370 <pio_add_program>
+1000052c:	0002      	movs	r2, r0
+1000052e:	27fe      	movs	r7, #254	; 0xfe
+10000530:	05bf      	lsls	r7, r7, #22
+10000532:	9700      	str	r7, [sp, #0]
+10000534:	2300      	movs	r3, #0
+10000536:	0031      	movs	r1, r6
+10000538:	0020      	movs	r0, r4
+1000053a:	f7ff fefb 	bl	10000334 <_Z19output_program_initP8pio_hw_tjjjf>
+1000053e:	6822      	ldr	r2, [r4, #0]
+10000540:	2501      	movs	r5, #1
+10000542:	002b      	movs	r3, r5
+10000544:	40b3      	lsls	r3, r6
+10000546:	439a      	bics	r2, r3
+10000548:	4313      	orrs	r3, r2
+1000054a:	6023      	str	r3, [r4, #0]
+1000054c:	4e18      	ldr	r6, [pc, #96]	; (100005b0 <main+0xc8>)
+1000054e:	0029      	movs	r1, r5
+10000550:	0030      	movs	r0, r6
+10000552:	f006 feef 	bl	10007334 <pio_claim_unused_sm>
+10000556:	0004      	movs	r4, r0
+10000558:	4916      	ldr	r1, [pc, #88]	; (100005b4 <main+0xcc>)
+1000055a:	0030      	movs	r0, r6
+1000055c:	f006 ff08 	bl	10007370 <pio_add_program>
+10000560:	0002      	movs	r2, r0
+10000562:	9700      	str	r7, [sp, #0]
+10000564:	002b      	movs	r3, r5
+10000566:	0021      	movs	r1, r4
+10000568:	0030      	movs	r0, r6
+1000056a:	f7ff ff57 	bl	1000041c <_Z18input_program_initP8pio_hw_tjjjf>
+1000056e:	6833      	ldr	r3, [r6, #0]
+10000570:	40a5      	lsls	r5, r4
+10000572:	43ab      	bics	r3, r5
+10000574:	431d      	orrs	r5, r3
+10000576:	6035      	str	r5, [r6, #0]
+10000578:	480f      	ldr	r0, [pc, #60]	; (100005b8 <main+0xd0>)
+1000057a:	f006 fe31 	bl	100071e0 <multicore_launch_core1>
+1000057e:	4b0c      	ldr	r3, [pc, #48]	; (100005b0 <main+0xc8>)
+10000580:	685a      	ldr	r2, [r3, #4]
+10000582:	0021      	movs	r1, r4
+10000584:	3108      	adds	r1, #8
+10000586:	2301      	movs	r3, #1
+10000588:	408b      	lsls	r3, r1
+1000058a:	4213      	tst	r3, r2
+1000058c:	d1f7      	bne.n	1000057e <main+0x96>
+1000058e:	008b      	lsls	r3, r1, #2
+10000590:	4a07      	ldr	r2, [pc, #28]	; (100005b0 <main+0xc8>)
+10000592:	5899      	ldr	r1, [r3, r2]
+10000594:	43c9      	mvns	r1, r1
+10000596:	4809      	ldr	r0, [pc, #36]	; (100005bc <main+0xd4>)
+10000598:	f004 fa98 	bl	10004acc <__wrap_printf>
+1000059c:	e7ef      	b.n	1000057e <main+0x96>
 1000059e:	46c0      	nop			; (mov r8, r8)
 100005a0:	00061a80 	.word	0x00061a80
 100005a4:	10007670 	.word	0x10007670

@@ -56,7 +56,6 @@ int main()
     while (true) 
     {
         //pio_sm_put_blocking(pio, smPulser, (pulseWidth-1));
-        printf("Count: %d\n", pio_sm_get_blocking(pio, smCounter));
-        sleep_ms(100);
+        printf("Count: %d\n", ~pio_sm_get_blocking(pioC, smCounter));
     }
 }
