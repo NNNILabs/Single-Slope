@@ -34,19 +34,29 @@ int main()
     vreg_set_voltage(VREG_VOLTAGE_MAX);
     set_sys_clock_khz(400000, true);
 
-    PIO pioPulser = pio0;
-    uint smPulser = pio_claim_unused_sm(pioPulser, true);
-    uint offsetPulser = pio_add_program(pioPulser, &output_program);
+    PIO pio = pio0;
+    PIO pioC = pio1;
+
+    uint smPulser = pio_claim_unused_sm(pio, true);
+    uint offsetPulser = pio_add_program(pio, &output_program);
     float divPulser = 1;
-    output_program_init(pioPulser, smPulser, offsetPulser, outputPin, divPulser);
+    output_program_init(pio, smPulser, offsetPulser, outputPin, divPulser);
+    pio_sm_set_enabled(pio, smPulser, true);
+
+    uint smCounter = pio_claim_unused_sm(pioC, true);
+    uint offsetCounter = pio_add_program(pioC, &input_program);
+    float divCounter = 1;
+    input_program_init(pioC, smCounter, offsetCounter, inputPin, divCounter);
+    pio_sm_set_enabled(pioC, smCounter, true);
 
     multicore_launch_core1(core2);
     
-    uint32_t pulseWidth = 10;
+    uint32_t pulseWidth = 400;
 
     while (true) 
     {
-        pio_sm_put_blocking(pioPulser, smPulser, pulseWidth);
+        //pio_sm_put_blocking(pio, smPulser, (pulseWidth-1));
+        printf("Count: %d\n", pio_sm_get_blocking(pio, smCounter));
         sleep_ms(100);
     }
 }

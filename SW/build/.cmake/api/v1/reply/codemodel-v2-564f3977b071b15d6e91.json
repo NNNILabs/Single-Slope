@@ -1142,7 +1142,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "blink::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-blink-Debug-b2fb90248817a2b0fdf9.json",
+					"jsonFile" : "target-blink-Debug-1716cac69d951037f5ed.json",
 					"name" : "blink",
 					"projectIndex" : 0
 				},
@@ -1156,7 +1156,7 @@
 				{
 					"directoryIndex" : 43,
 					"id" : "bs2_default::@bc554eaed616d198a22d",
-					"jsonFile" : "target-bs2_default-Debug-757308a0e153d5a35271.json",
+					"jsonFile" : "target-bs2_default-Debug-fb8b2ef3b489d6573d17.json",
 					"name" : "bs2_default",
 					"projectIndex" : 1
 				},
@@ -1184,7 +1184,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "slower_boot2::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-slower_boot2-Debug-3207f518a805c9101644.json",
+					"jsonFile" : "target-slower_boot2-Debug-dba530cfd7a10b6377a9.json",
 					"name" : "slower_boot2",
 					"projectIndex" : 0
 				},
@@ -1222,8 +1222,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/vivek/Desktop/Code/C-C++/Single Slope/build",
-		"source" : "C:/Users/vivek/Desktop/Code/C-C++/Single Slope"
+		"build" : "C:/Users/vivek/Desktop/Projects/Single-Slope/SW/build",
+		"source" : "C:/Users/vivek/Desktop/Projects/Single-Slope/SW"
 	},
 	"version" : 
 	{

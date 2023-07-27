@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "pico-sdk/src/rp2_common/boot_stage2/bs2_default.elf"
+			"path" : "slower_boot2.elf"
 		}
 	],
 	"backtrace" : 2,
@@ -15,22 +15,24 @@
 			"target_link_options",
 			"pico_add_map_output",
 			"target_link_libraries",
+			"target_compile_definitions",
 			"target_include_directories"
 		],
 		"files" : 
 		[
 			"C:/Program Files/Raspberry Pi/Pico SDK v1.5.0/pico-sdk/src/rp2_common/boot_stage2/CMakeLists.txt",
+			"CMakeLists.txt",
 			"C:/Program Files/Raspberry Pi/Pico SDK v1.5.0/pico-sdk/src/CMakeLists.txt"
 		],
 		"nodes" : 
 		[
 			{
-				"file" : 0
+				"file" : 1
 			},
 			{
 				"command" : 1,
-				"file" : 0,
-				"line" : 101,
+				"file" : 1,
+				"line" : 22,
 				"parent" : 0
 			},
 			{
@@ -65,7 +67,7 @@
 			},
 			{
 				"command" : 2,
-				"file" : 1,
+				"file" : 2,
 				"line" : 62,
 				"parent" : 6
 			},
@@ -77,6 +79,12 @@
 			},
 			{
 				"command" : 5,
+				"file" : 1,
+				"line" : 23,
+				"parent" : 0
+			},
+			{
+				"command" : 6,
 				"file" : 0,
 				"line" : 51,
 				"parent" : 1
@@ -103,6 +111,10 @@
 					"define" : "PICO_BUILD=1"
 				},
 				{
+					"backtrace" : 9,
+					"define" : "PICO_FLASH_SPI_CLKDIV=4"
+				},
+				{
 					"backtrace" : 8,
 					"define" : "PICO_NO_HARDWARE=0"
 				},
@@ -114,7 +126,7 @@
 			"includes" : 
 			[
 				{
-					"backtrace" : 9,
+					"backtrace" : 10,
 					"path" : "C:/Program Files/Raspberry Pi/Pico SDK v1.5.0/pico-sdk/src/rp2_common/boot_stage2/asminclude"
 				},
 				{
@@ -131,7 +143,7 @@
 				},
 				{
 					"backtrace" : 8,
-					"path" : "C:/Users/vivek/Desktop/Code/C-C++/Single Slope/build/generated/pico_base"
+					"path" : "C:/Users/vivek/Desktop/Projects/Single-Slope/SW/build/generated/pico_base"
 				},
 				{
 					"backtrace" : 8,
@@ -153,7 +165,7 @@
 			]
 		}
 	],
-	"id" : "bs2_default::@bc554eaed616d198a22d",
+	"id" : "slower_boot2::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -183,18 +195,18 @@
 			},
 			{
 				"backtrace" : 7,
-				"fragment" : "-Wl,-Map=bs2_default.elf.map",
+				"fragment" : "-Wl,-Map=slower_boot2.elf.map",
 				"role" : "flags"
 			}
 		],
 		"language" : "ASM"
 	},
-	"name" : "bs2_default",
-	"nameOnDisk" : "bs2_default.elf",
+	"name" : "slower_boot2",
+	"nameOnDisk" : "slower_boot2.elf",
 	"paths" : 
 	{
-		"build" : "pico-sdk/src/rp2_common/boot_stage2",
-		"source" : "C:/Program Files/Raspberry Pi/Pico SDK v1.5.0/pico-sdk/src/rp2_common/boot_stage2"
+		"build" : ".",
+		"source" : "."
 	},
 	"sourceGroups" : 
 	[

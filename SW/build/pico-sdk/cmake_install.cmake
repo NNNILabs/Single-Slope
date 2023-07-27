@@ -39,9 +39,9 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("C:/Users/vivek/Desktop/Code/C-C++/Single Slope/build/pico-sdk/tools/cmake_install.cmake")
-  include("C:/Users/vivek/Desktop/Code/C-C++/Single Slope/build/pico-sdk/src/cmake_install.cmake")
-  include("C:/Users/vivek/Desktop/Code/C-C++/Single Slope/build/pico-sdk/docs/cmake_install.cmake")
+  include("C:/Users/vivek/Desktop/Projects/Single-Slope/SW/build/pico-sdk/tools/cmake_install.cmake")
+  include("C:/Users/vivek/Desktop/Projects/Single-Slope/SW/build/pico-sdk/src/cmake_install.cmake")
+  include("C:/Users/vivek/Desktop/Projects/Single-Slope/SW/build/pico-sdk/docs/cmake_install.cmake")
 
 endif()
 

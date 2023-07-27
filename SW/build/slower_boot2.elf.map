@@ -75,5 +75,5 @@ LOAD linker stubs
  .debug_aranges
                 0x00000000       0x20 CMakeFiles/slower_boot2.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.0/pico-sdk/src/rp2_common/boot_stage2/compile_time_choice.S.obj
 
-.debug_str      0x00000000       0xa5
- .debug_str     0x00000000       0xa5 CMakeFiles/slower_boot2.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.0/pico-sdk/src/rp2_common/boot_stage2/compile_time_choice.S.obj
+.debug_str      0x00000000       0xa6
+ .debug_str     0x00000000       0xa6 CMakeFiles/slower_boot2.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.0/pico-sdk/src/rp2_common/boot_stage2/compile_time_choice.S.obj

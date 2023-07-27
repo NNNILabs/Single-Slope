@@ -1,4 +1,4 @@
-// Padded and checksummed version of: C:/Users/vivek/Desktop/Code/C-C++/Single Slope/build/slower_boot2.bin
+// Padded and checksummed version of: C:/Users/vivek/Desktop/Projects/Single-Slope/SW/build/slower_boot2.bin
 
 .cpu cortex-m0plus
 .thumb

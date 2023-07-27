@@ -195,7 +195,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "c:/Users/vivek/Desktop/Code/C-C++/Single Slope/build"
+			"value" : "c:/Users/vivek/Desktop/Projects/Single-Slope/SW/build"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -279,10 +279,10 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
+					"value" : "CXX compiler"
 				}
 			],
-			"type" : "FILEPATH",
+			"type" : "STRING",
 			"value" : "C:/Program Files/Raspberry Pi/Pico SDK v1.5.0/gcc-arm-none-eabi/bin/arm-none-eabi-g++.exe"
 		},
 		{
@@ -407,10 +407,10 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
+					"value" : "C compiler"
 				}
 			],
-			"type" : "FILEPATH",
+			"type" : "STRING",
 			"value" : "C:/Program Files/Raspberry Pi/Pico SDK v1.5.0/gcc-arm-none-eabi/bin/arm-none-eabi-gcc.exe"
 		},
 		{
@@ -679,7 +679,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/vivek/Desktop/Code/C-C++/Single Slope/build/CMakeFiles/pkgRedirects"
+			"value" : "C:/Users/vivek/Desktop/Projects/Single-Slope/SW/build/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -739,7 +739,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "C:/Users/vivek/Desktop/Code/C-C++/Single Slope"
+			"value" : "C:/Users/vivek/Desktop/Projects/Single-Slope/SW"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -1463,7 +1463,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : " C:/Program Files/Raspberry Pi/Pico SDK v1.5.0/pico-sdk/src/rp2_common/cmsis C:/Program Files/Raspberry Pi/Pico SDK v1.5.0/pico-sdk/src/rp2040/hardware_regs C:/Program Files/Raspberry Pi/Pico SDK v1.5.0/pico-sdk/src/rp2_common/cmsis C:/Program Files/Raspberry Pi/Pico SDK v1.5.0/pico-sdk/src/rp2040/hardware_regs"
+			"value" : " C:/Program Files/Raspberry Pi/Pico SDK v1.5.0/pico-sdk/src/rp2_common/cmsis C:/Program Files/Raspberry Pi/Pico SDK v1.5.0/pico-sdk/src/rp2040/hardware_regs"
 		},
 		{
 			"name" : "PICO_DOXYGEN_PATHS",
@@ -1751,7 +1751,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/vivek/Desktop/Code/C-C++/Single Slope/build"
+			"value" : "C:/Users/vivek/Desktop/Projects/Single-Slope/SW/build"
 		},
 		{
 			"name" : "blink_IS_TOP_LEVEL",
@@ -1775,7 +1775,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/vivek/Desktop/Code/C-C++/Single Slope"
+			"value" : "C:/Users/vivek/Desktop/Projects/Single-Slope/SW"
 		},
 		{
 			"name" : "pico-sdk-tools_DIR",
@@ -1799,7 +1799,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/vivek/Desktop/Code/C-C++/Single Slope/build/pico-sdk"
+			"value" : "C:/Users/vivek/Desktop/Projects/Single-Slope/SW/build/pico-sdk"
 		},
 		{
 			"name" : "pico_sdk_IS_TOP_LEVEL",
