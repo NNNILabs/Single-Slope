@@ -51,11 +51,12 @@ int main()
 
     multicore_launch_core1(core2);
     
-    uint32_t pulseWidth = 400;
+    uint32_t pulseWidth = 4;
 
     while (true) 
     {
-        //pio_sm_put_blocking(pio, smPulser, (pulseWidth-1));
-        printf("Count: %u\n", ~pio_sm_get_blocking(pioC, smCounter));
+        pio_sm_put_blocking(pio, smPulser, (pulseWidth-1));
+        printf("Count: %u\n", ~pio_sm_get(pioC, smCounter));
+        sleep_ms(100);
     }
 }

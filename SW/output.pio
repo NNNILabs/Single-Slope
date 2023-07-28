@@ -36,10 +36,8 @@ start:
     wait 1 pin 1
 loop:
     jmp X--, test
-    jmp finish
 test:
     jmp pin, loop
-finish:
     in X, 32
 .wrap
 
@@ -47,7 +45,7 @@ finish:
 
 void input_program_init(PIO pio, uint sm, uint offset, uint pin, float div) {
 
-    pio_sm_config c = output_program_get_default_config(offset);
+    pio_sm_config c = input_program_get_default_config(offset);
 
     pio_gpio_init(pio, pin);
 

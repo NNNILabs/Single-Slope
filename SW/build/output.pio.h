@@ -54,23 +54,22 @@ void output_program_init(PIO pio, uint sm, uint offset, uint pin, float div) {
 // ----- //
 
 #define input_wrap_target 0
-#define input_wrap 5
+#define input_wrap 4
 
 static const uint16_t input_program_instructions[] = {
             //     .wrap_target
     0xa02b, //  0: mov    x, !null                   
     0x20a1, //  1: wait   1 pin, 1                   
-    0x0044, //  2: jmp    x--, 4                     
-    0x0005, //  3: jmp    5                          
-    0x00c2, //  4: jmp    pin, 2                     
-    0x4020, //  5: in     x, 32                      
+    0x0043, //  2: jmp    x--, 3                     
+    0x00c2, //  3: jmp    pin, 2                     
+    0x4020, //  4: in     x, 32                      
             //     .wrap
 };
 
 #if !PICO_NO_HARDWARE
 static const struct pio_program input_program = {
     .instructions = input_program_instructions,
-    .length = 6,
+    .length = 5,
     .origin = -1,
 };
 
@@ -81,7 +80,7 @@ static inline pio_sm_config input_program_get_default_config(uint offset) {
 }
 
 void input_program_init(PIO pio, uint sm, uint offset, uint pin, float div) {
-    pio_sm_config c = output_program_get_default_config(offset);
+    pio_sm_config c = input_program_get_default_config(offset);
     pio_gpio_init(pio, pin);
     pio_sm_set_consecutive_pindirs(pio, sm, pin, 1, false);
     sm_config_set_jmp_pin(&c, pin);
