@@ -8,7 +8,7 @@
 
 #include "output.pio.h"
 
-#define outputPin 0
+#define outputPin 12
 #define inputPin  1
 
 void core2()
@@ -34,6 +34,9 @@ int main()
     vreg_set_voltage(VREG_VOLTAGE_MAX);
     set_sys_clock_khz(400000, true);
 
+    gpio_init(12);
+    gpio_set_dir(12, GPIO_OUT);
+
     PIO pio = pio0;
     PIO pioC = pio1;
 
@@ -43,20 +46,20 @@ int main()
     output_program_init(pio, smPulser, offsetPulser, outputPin, divPulser);
     pio_sm_set_enabled(pio, smPulser, true);
 
-    uint smCounter = pio_claim_unused_sm(pioC, true);
-    uint offsetCounter = pio_add_program(pioC, &input_program);
-    float divCounter = 1;
-    input_program_init(pioC, smCounter, offsetCounter, inputPin, divCounter);
-    pio_sm_set_enabled(pioC, smCounter, true);
+    // uint smCounter = pio_claim_unused_sm(pioC, true);
+    // uint offsetCounter = pio_add_program(pioC, &input_program);
+    // float divCounter = 1;
+    // input_program_init(pioC, smCounter, offsetCounter, inputPin, divCounter);
+    // pio_sm_set_enabled(pioC, smCounter, true);
 
     multicore_launch_core1(core2);
     
-    uint32_t pulseWidth = 4;
+    uint32_t pulseWidth = 8000000;
 
     while (true) 
     {
         pio_sm_put_blocking(pio, smPulser, (pulseWidth-1));
-        printf("Count: %u\n", ~pio_sm_get(pioC, smCounter));
-        sleep_ms(100);
+        //printf("Count: %u\n", ~pio_sm_get_blocking(pioC, smCounter));
+        sleep_ms(20);
     }
 }

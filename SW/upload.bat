@@ -4,7 +4,7 @@ set loop=0
 echo upload start
 
 echo resetting the pico
-mode com14 BAUD=1200 
+mode com44 BAUD=1200 
 
 :loop
 
