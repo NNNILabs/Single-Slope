@@ -1,14 +1,14 @@
 # ninja log v5
 172	369	7144987931403909	slower_boot2.elf	50c3f7ec491cec5d
 1082	1837	7144987946504269	CMakeFiles/blink.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.0/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.obj	559ad19df2c6196f
-41	70	7145798323267942	C:/Users/vivek/Desktop/Projects/Single-Slope/SW/build/output.pio.h	b8dd951226190fc
+39	64	7202425106078983	C:/Users/vivek/Desktop/Projects/Single-Slope/SW/build/output.pio.h	b8dd951226190fc
 2565	3320	7144987961459983	CMakeFiles/blink.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.0/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj	ce846aba3e67d9e1
-41	70	7145798323267942	output.pio.h	b8dd951226190fc
+39	64	7202425106078983	output.pio.h	b8dd951226190fc
 34	164	7144987930263036	pico-sdk/src/rp2_common/boot_stage2/CMakeFiles/bs2_default.dir/compile_time_choice.S.obj	95a7a52e56dba10e
 23	172	7144987930263036	CMakeFiles/slower_boot2.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.0/pico-sdk/src/rp2_common/boot_stage2/compile_time_choice.S.obj	fbe219f320a65cdf
 2482	2925	7144987957615146	CMakeFiles/blink.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.0/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj	8f95db1bfe48b7ce
 166	376	7144987931423836	pico-sdk/src/rp2_common/boot_stage2/bs2_default.elf	a19424e355b0b599
-31	333	7146254697752724	CMakeFiles/blink.dir/main.cpp.obj	198c89d81370c29d
+38	255	7205884003917765	CMakeFiles/blink.dir/main.cpp.obj	198c89d81370c29d
 369	405	7144987932693938	slower_boot2.bin	ba25d9aad23079cc
 369	405	7144987932693938	C:/Users/vivek/Desktop/Projects/Single-Slope/SW/build/slower_boot2.bin	ba25d9aad23079cc
 405	515	7144987933752379	slower_boot2_padded_checksummed.S	9971e006edc2d383
@@ -81,6 +81,10 @@
 3521	3964	7144987968252217	CMakeFiles/blink.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.0/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.obj	a0b3482672cc1f2a
 3359	4043	7144987969033019	CMakeFiles/blink.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.0/pico-sdk/lib/tinyusb/src/tusb.c.obj	ab724626d1a6955b
 3665	4112	7144987969739983	CMakeFiles/blink.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.0/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj	a0f1da640746ff89
-334	768	7146254700387200	blink.elf	4c8a928e9f61a3f0
-769	803	0	CMakeFiles/FinalMessage	52b0abc0ebdc1711
-769	803	0	C:/Users/vivek/Desktop/Projects/Single-Slope/SW/build/CMakeFiles/FinalMessage	52b0abc0ebdc1711
+255	538	7205884005514415	blink.elf	4c8a928e9f61a3f0
+539	571	0	CMakeFiles/FinalMessage	52b0abc0ebdc1711
+539	571	0	C:/Users/vivek/Desktop/Projects/Single-Slope/SW/build/CMakeFiles/FinalMessage	52b0abc0ebdc1711
+29	448	7206241391216554	CMakeFiles/blink.dir/main.cpp.obj	198c89d81370c29d
+448	1483	7206241400095493	blink.elf	4c8a928e9f61a3f0
+1483	1518	0	CMakeFiles/FinalMessage	52b0abc0ebdc1711
+1483	1518	0	C:/Users/vivek/Desktop/Projects/Single-Slope/SW/build/CMakeFiles/FinalMessage	52b0abc0ebdc1711

@@ -8,84 +8,54 @@
 #include "hardware/pio.h"
 #endif
 
-// ------ //
-// output //
-// ------ //
+// ----- //
+// count //
+// ----- //
 
-#define output_wrap_target 0
-#define output_wrap 2
+#define count_wrap_target 0
+#define count_wrap 10
 
-static const uint16_t output_program_instructions[] = {
+static const uint16_t count_program_instructions[] = {
             //     .wrap_target
-    0x6020, //  0: out    x, 32           side 0     
-    0x1041, //  1: jmp    x--, 1          side 1     
-    0x0000, //  2: jmp    0               side 0     
+    0xa02b, //  0: mov    x, !null        side 0     
+    0x6040, //  1: out    y, 32           side 0     
+    0x10c6, //  2: jmp    pin, 6          side 1     
+    0xb142, //  3: nop                    side 1 [1] 
+    0x1082, //  4: jmp    y--, 2          side 1     
+    0x000a, //  5: jmp    10              side 0     
+    0xb042, //  6: nop                    side 1     
+    0x1048, //  7: jmp    x--, 8          side 1     
+    0x1082, //  8: jmp    y--, 2          side 1     
+    0x000a, //  9: jmp    10              side 0     
+    0x4020, // 10: in     x, 32           side 0     
             //     .wrap
 };
 
 #if !PICO_NO_HARDWARE
-static const struct pio_program output_program = {
-    .instructions = output_program_instructions,
-    .length = 3,
+static const struct pio_program count_program = {
+    .instructions = count_program_instructions,
+    .length = 11,
     .origin = -1,
 };
 
-static inline pio_sm_config output_program_get_default_config(uint offset) {
+static inline pio_sm_config count_program_get_default_config(uint offset) {
     pio_sm_config c = pio_get_default_sm_config();
-    sm_config_set_wrap(&c, offset + output_wrap_target, offset + output_wrap);
+    sm_config_set_wrap(&c, offset + count_wrap_target, offset + count_wrap);
     sm_config_set_sideset(&c, 1, false, false);
     return c;
 }
 
-void output_program_init(PIO pio, uint sm, uint offset, uint pin, float div) {
-    pio_sm_config c = output_program_get_default_config(offset);
-    pio_gpio_init(pio, pin);
-    pio_sm_set_consecutive_pindirs(pio, sm, pin, 1, true);
-    sm_config_set_sideset_pins(&c, pin);
-    sm_config_set_out_shift(&c, true, true, 32);
-    sm_config_set_clkdiv(&c, div);
-    pio_sm_init(pio, sm, offset, &c);
-}
-
-#endif
-
-// ----- //
-// input //
-// ----- //
-
-#define input_wrap_target 0
-#define input_wrap 4
-
-static const uint16_t input_program_instructions[] = {
-            //     .wrap_target
-    0xa02b, //  0: mov    x, !null                   
-    0x20a0, //  1: wait   1 pin, 0                   
-    0x0043, //  2: jmp    x--, 3                     
-    0x00c2, //  3: jmp    pin, 2                     
-    0x4020, //  4: in     x, 32                      
-            //     .wrap
-};
-
-#if !PICO_NO_HARDWARE
-static const struct pio_program input_program = {
-    .instructions = input_program_instructions,
-    .length = 5,
-    .origin = -1,
-};
-
-static inline pio_sm_config input_program_get_default_config(uint offset) {
-    pio_sm_config c = pio_get_default_sm_config();
-    sm_config_set_wrap(&c, offset + input_wrap_target, offset + input_wrap);
-    return c;
-}
-
-void input_program_init(PIO pio, uint sm, uint offset, uint pin, float div) {
-    pio_sm_config c = input_program_get_default_config(offset);
-    pio_gpio_init(pio, pin);
-    pio_sm_set_consecutive_pindirs(pio, sm, pin, 1, false);
-    sm_config_set_jmp_pin(&c, pin);
+void count_program_init(PIO pio, uint sm, uint offset, uint inpin, uint outpin, float div) {
+    pio_sm_config c = count_program_get_default_config(offset);
+    pio_gpio_init(pio, inpin);
+    pio_gpio_init(pio, outpin);
+    pio_sm_set_consecutive_pindirs(pio, sm, inpin, 1, false);
+    pio_sm_set_consecutive_pindirs(pio, sm, outpin, 1, true);
+    sm_config_set_jmp_pin(&c, inpin);
+    sm_config_set_sideset_pins(&c, outpin);
     sm_config_set_clkdiv(&c, div);
     sm_config_set_in_shift(&c, false, true, 32);
+    sm_config_set_out_shift(&c, false, true, 32);
     pio_sm_init(pio, sm, offset, &c);
 }
 
