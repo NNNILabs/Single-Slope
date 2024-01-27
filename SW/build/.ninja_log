@@ -8,7 +8,7 @@
 23	172	7144987930263036	CMakeFiles/slower_boot2.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.0/pico-sdk/src/rp2_common/boot_stage2/compile_time_choice.S.obj	fbe219f320a65cdf
 2482	2925	7144987957615146	CMakeFiles/blink.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.0/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj	8f95db1bfe48b7ce
 166	376	7144987931423836	pico-sdk/src/rp2_common/boot_stage2/bs2_default.elf	a19424e355b0b599
-38	255	7205884003917765	CMakeFiles/blink.dir/main.cpp.obj	198c89d81370c29d
+37	305	7265399368615147	CMakeFiles/blink.dir/main.cpp.obj	198c89d81370c29d
 369	405	7144987932693938	slower_boot2.bin	ba25d9aad23079cc
 369	405	7144987932693938	C:/Users/vivek/Desktop/Projects/Single-Slope/SW/build/slower_boot2.bin	ba25d9aad23079cc
 405	515	7144987933752379	slower_boot2_padded_checksummed.S	9971e006edc2d383
@@ -81,10 +81,6 @@
 3521	3964	7144987968252217	CMakeFiles/blink.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.0/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.obj	a0b3482672cc1f2a
 3359	4043	7144987969033019	CMakeFiles/blink.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.0/pico-sdk/lib/tinyusb/src/tusb.c.obj	ab724626d1a6955b
 3665	4112	7144987969739983	CMakeFiles/blink.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.0/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj	a0f1da640746ff89
-255	538	7205884005514415	blink.elf	4c8a928e9f61a3f0
-539	571	0	CMakeFiles/FinalMessage	52b0abc0ebdc1711
-539	571	0	C:/Users/vivek/Desktop/Projects/Single-Slope/SW/build/CMakeFiles/FinalMessage	52b0abc0ebdc1711
-29	448	7206241391216554	CMakeFiles/blink.dir/main.cpp.obj	198c89d81370c29d
-448	1483	7206241400095493	blink.elf	4c8a928e9f61a3f0
-1483	1518	0	CMakeFiles/FinalMessage	52b0abc0ebdc1711
-1483	1518	0	C:/Users/vivek/Desktop/Projects/Single-Slope/SW/build/CMakeFiles/FinalMessage	52b0abc0ebdc1711
+306	632	7265399370534680	blink.elf	4c8a928e9f61a3f0
+34	62	0	CMakeFiles/FinalMessage	52b0abc0ebdc1711
+34	62	0	C:/Users/vivek/Desktop/Projects/Single-Slope/SW/build/CMakeFiles/FinalMessage	52b0abc0ebdc1711

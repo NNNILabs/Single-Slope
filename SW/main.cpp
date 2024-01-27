@@ -11,15 +11,13 @@
 #define outputPin 12
 #define inputPin  0
 
-#define inputMuxPin 13 //TMUX6234 SEL2
-#define refMuxPin   14 //TMUX6234 SEL3
-#define gndMuxPin   15 //TMUX6234 SEL4
+#define inputMuxPin 13 // TMUX6234 SEL2
+#define refMuxPin   14 // TMUX6234 SEL3
+#define gndMuxPin   15 // TMUX6234 SEL4
 
 #define averageLength 50
 double average[averageLength] = {0};
 int averageIndex = 0;
-
-double testArray[50] = {10.0};
 
 PIO pio = pio0;
 uint smCount;
@@ -33,33 +31,6 @@ double result = 0.0;
 double vrefAbs = 7.06004;
 
 uint32_t pulseWidth = 2000000;
-
-#define WINDOW_SIZE 5
-
-typedef struct MovingAverage {
-    double window[WINDOW_SIZE];
-    int index;
-    int count;
-    double sum;
-} MovingAverage;
-
-void initMovingAverage(MovingAverage *ma) {
-    ma->index = 0;
-    ma->count = 0;
-    ma->sum = 0.0;
-    for (int i = 0; i < WINDOW_SIZE; ++i) {
-        ma->window[i] = 0.0;
-    }
-}
-
-double updateMovingAverage(MovingAverage *ma, double newValue) {
-    ma->sum -= ma->window[ma->index];
-    ma->window[ma->index] = newValue;
-    ma->sum += newValue;
-    ma->index = (ma->index + 1) % WINDOW_SIZE;
-    if (ma->count < WINDOW_SIZE) ma->count++;
-    return ma->sum / ma->count;
-}
 
 void setMuxIn()
 {
@@ -109,7 +80,7 @@ void getReading()
 {
     pio_sm_clear_fifos(pio, smCount);
 
-    //Zero reading
+    // Zero reading
     pio_sm_put_blocking(pio, smCount, (pulseWidth-1));
     sleep_ms(30);
     zero = ~pio_sm_get_blocking(pio, smCount);
@@ -153,7 +124,7 @@ int main()
 {
     stdio_init_all();
 
-    //Housekeeping :amsmiles:
+    // Housekeeping :amsmiles:
     vreg_set_voltage(VREG_VOLTAGE_MAX);
     set_sys_clock_khz(400000, true);
 
@@ -166,6 +137,11 @@ int main()
     gpio_set_dir(gndMuxPin, GPIO_OUT);
 
     setMuxGnd();
+
+    // Set power supply to PWM mode
+    gpio_init(23);
+    gpio_set_dir(23, GPIO_OUT);
+    gpio_put(23, 1);
     
     smCount = pio_claim_unused_sm(pio, true);
     offsetCount = pio_add_program(pio, &count_program);
@@ -174,11 +150,6 @@ int main()
     pio_sm_set_enabled(pio, smCount, true);
 
     multicore_launch_core1(core2);
-
-    MovingAverage ma;
-    initMovingAverage(&ma);
-
-    int dataSize = sizeof(testArray) / sizeof(testArray[0]);
 
     while (true) 
     {
