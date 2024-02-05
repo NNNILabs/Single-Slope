@@ -8,12 +8,12 @@
 
 #include "output.pio.h"
 
-#define outputPin 12
-#define inputPin  0
+#define outputPin   19 // 20ms conversion pulse (TMUX7234 SW2)
+#define inputPin    15 // Pulse in
 
-#define inputMuxPin 13 //TMUX6234 SEL2
-#define refMuxPin   14 //TMUX6234 SEL3
-#define gndMuxPin   15 //TMUX6234 SEL4
+#define inputMuxPin 16 // TMUX7234 SW3
+#define refMuxPin   18 // TMUX7234 SW1
+#define gndMuxPin   17 // TMUX7234 SW4
 
 #define averageLength 50
 double average[averageLength] = {0};
@@ -109,7 +109,7 @@ void getReading()
 {
     pio_sm_clear_fifos(pio, smCount);
 
-    //Zero reading
+    // Reference reading
     pio_sm_put_blocking(pio, smCount, (pulseWidth-1));
     sleep_ms(30);
     zero = ~pio_sm_get_blocking(pio, smCount);
@@ -117,7 +117,7 @@ void getReading()
     setMuxRef();
     sleep_ms(5);
 
-    // Vref reading
+    // Input reading
     pio_sm_put_blocking(pio, smCount, (pulseWidth-1));
     sleep_ms(30);
     vref = ~pio_sm_get_blocking(pio, smCount);
@@ -125,7 +125,7 @@ void getReading()
     setMuxIn();
     sleep_ms(10);
 
-    // Input reading
+    // GND reading
     pio_sm_put_blocking(pio, smCount, (pulseWidth-1));
     sleep_ms(30);
     input = ~pio_sm_get_blocking(pio, smCount);
@@ -142,9 +142,9 @@ void core2()
     while (true)
     {
         gpio_put(25, 1);
-        sleep_ms(10);
+        sleep_ms(500);
         gpio_put(25, 0);
-        sleep_ms(4990);
+        sleep_ms(500);
     }
     
 }
@@ -153,9 +153,14 @@ int main()
 {
     stdio_init_all();
 
-    //Housekeeping :amsmiles:
+    // Housekeeping :amsmiles:
     vreg_set_voltage(VREG_VOLTAGE_MAX);
     set_sys_clock_khz(400000, true);
+
+    // Voltage regulator in PWM mode
+    gpio_init(23);
+    gpio_set_dir(23, GPIO_OUT);
+    gpio_put(23, 1);
 
     gpio_init(inputMuxPin);
     gpio_init(refMuxPin);
@@ -197,7 +202,7 @@ int main()
         // averageSum = averageSum/averageLength;
         // averageSum = averageSum * vrefAbs;
         // printf("%+f\n", averageSum);
-        printf("%d, %d, %d, %+d, %+f\n", zero, vref, input, (zero - input), result);
+        printf("%d, %d, %d, %+03d, %+f\n", zero, vref, input, (zero - input), result);
         // sleep_ms(100);
     }
 }
