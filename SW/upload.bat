@@ -4,15 +4,11 @@ set loop=0
 echo upload start
 
 echo resetting the pico
-<<<<<<< HEAD
 mode com3 BAUD=1200 
-=======
-mode com13 BAUD=1200 
->>>>>>> 0c298be106369aea0613ffb5026da950a453de78
 
 :loop
 
-copy build\*.uf2 D:\
+copy build\*.uf2 E:\
 echo %errorlevel%
 if "%errorlevel%"=="0" goto success
 

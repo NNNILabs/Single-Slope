@@ -5,25 +5,20 @@
 #include "hardware/pio.h"
 #include "hardware/clocks.h"
 #include "hardware/vreg.h"
+#include "hardware/gpio.h"
 
 #include "output.pio.h"
 
 #define outputPin   19 // 20ms conversion pulse (TMUX7234 SW2)
 #define inputPin    15 // Pulse in
 
-<<<<<<< HEAD
 #define inputMuxPin 16 // TMUX7234 SW3
 #define refMuxPin   18 // TMUX7234 SW1
 #define gndMuxPin   17 // TMUX7234 SW4
-=======
-#define inputMuxPin 13 // TMUX6234 SEL2
-#define refMuxPin   14 // TMUX6234 SEL3
-#define gndMuxPin   15 // TMUX6234 SEL4
->>>>>>> 0c298be106369aea0613ffb5026da950a453de78
 
-#define averageLength 50
-double average[averageLength] = {0};
-int averageIndex = 0;
+#define syncPin     10 // Sync with mains, etc.
+
+#define NAVG        20 // Number of readings to average over
 
 PIO pio = pio0;
 uint smCount;
@@ -36,98 +31,105 @@ int32_t input = 0;
 double result = 0.0;
 double vrefAbs = 7.06004;
 
+bool readFlag = 0;
+
 uint32_t pulseWidth = 2000000;
 
 void setMuxIn()
 {
-    sleep_us(1);
+    for(uint32_t i = 0; i < 50; i++);
     gpio_put(inputMuxPin, 1);
-    sleep_us(1);
+    for(uint32_t i = 0; i < 50; i++);
     gpio_put(refMuxPin, 0);
-    sleep_us(1);
+    for(uint32_t i = 0; i < 50; i++);
     gpio_put(gndMuxPin, 0);
-    sleep_us(1);
+    for(uint32_t i = 0; i < 50; i++);
 }
 
 void setMuxRef()
 {
-    sleep_us(1);
+    for(uint32_t i = 0; i < 50; i++);
     gpio_put(inputMuxPin, 0);
-    sleep_us(1);
+    for(uint32_t i = 0; i < 50; i++);
     gpio_put(refMuxPin, 1);
-    sleep_us(1);
+    for(uint32_t i = 0; i < 50; i++);
     gpio_put(gndMuxPin, 0);
-    sleep_us(1);
+    for(uint32_t i = 0; i < 50; i++);
 }
 
 void setMuxGnd()
 {
-    sleep_us(1);
+    for(uint32_t i = 0; i < 50; i++);
     gpio_put(inputMuxPin, 0);
-    sleep_us(1);
+    for(uint32_t i = 0; i < 50; i++);
     gpio_put(refMuxPin, 0);
-    sleep_us(1);
+    for(uint32_t i = 0; i < 50; i++);
     gpio_put(gndMuxPin, 1);
-    sleep_us(1);
+    for(uint32_t i = 0; i < 50; i++);
 }
 
 void resetMux()
 {
-    sleep_us(1);
+    for(uint32_t i = 0; i < 50; i++);
     gpio_put(inputMuxPin, 0);
-    sleep_us(1);
+    for(uint32_t i = 0; i < 50; i++);
     gpio_put(refMuxPin, 0);
-    sleep_us(1);
+    for(uint32_t i = 0; i < 50; i++);
     gpio_put(gndMuxPin, 0);
-    sleep_us(1);
+    for(uint32_t i = 0; i < 50; i++);
 }
 
-void getReading()
+void getReading(uint gpio, uint32_t events)
 {
+    // Don't calculate output yet!
+    readFlag = 1;
+
+    // Note: Each for iteration takes 20ns at 400MHz
     pio_sm_clear_fifos(pio, smCount);
 
-<<<<<<< HEAD
+    gpio_put(25, 1);
+
     // Reference reading
-=======
-    // Zero reading
->>>>>>> 0c298be106369aea0613ffb5026da950a453de78
     pio_sm_put_blocking(pio, smCount, (pulseWidth-1));
-    sleep_ms(30);
+    for(uint32_t i = 0; i < 1500000; i++);
     zero = ~pio_sm_get_blocking(pio, smCount);
-    sleep_ms(5);
+    for(uint32_t i = 0; i < 250000; i++);
     setMuxRef();
-    sleep_ms(5);
+    for(uint32_t i = 0; i < 250000; i++);
 
     // Input reading
     pio_sm_put_blocking(pio, smCount, (pulseWidth-1));
-    sleep_ms(30);
+    for(uint32_t i = 0; i < 1500000; i++);
     vref = ~pio_sm_get_blocking(pio, smCount);
-    sleep_ms(5);
+    for(uint32_t i = 0; i < 250000; i++);
     setMuxIn();
-    sleep_ms(10);
+    for(uint32_t i = 0; i < 250000; i++);
 
     // GND reading
     pio_sm_put_blocking(pio, smCount, (pulseWidth-1));
-    sleep_ms(30);
+    for(uint32_t i = 0; i < 1500000; i++);
     input = ~pio_sm_get_blocking(pio, smCount);
-    sleep_ms(5);
+    for(uint32_t i = 0; i < 250000; i++);
     setMuxGnd();
-    sleep_ms(10);
+    for(uint32_t i = 0; i < 250000; i++);
+
+    gpio_put(25, 0);
+
+    result = 0.0;
+    result = ((double)(input - zero)/(double)(vref - zero))*vrefAbs;
+    result = result * -1;
+
+    // Go ahead now, lol
+    readFlag = 0;
 }
 
 void core2()
 {
+    // Reading indicator LED
     gpio_init(25);
     gpio_set_dir(25, GPIO_OUT);
 
-    while (true)
-    {
-        gpio_put(25, 1);
-        sleep_ms(500);
-        gpio_put(25, 0);
-        sleep_ms(500);
-    }
-    
+    gpio_set_irq_enabled_with_callback(syncPin, GPIO_IRQ_EDGE_RISE, true, &getReading);
 }
 
 int main() 
@@ -166,24 +168,25 @@ int main()
 
     multicore_launch_core1(core2);
 
+    uint32_t newInput = 0;
+    char inputBuffer[32] = {0};
+
     while (true) 
     {
-        getReading();
-        result = ((double)(input - zero)/(double)(vref - zero))*vrefAbs;
-        // average[averageIndex] = testArray[averageIndex++];
-        // double averageSum = 0;
-        // for(int i = 0; i < averageLength; i = i + 1)
+        while(readFlag);
+
+        newInput = scanf("%s", &inputBuffer, 31);
+
+        // result = 0.0;
+
+        // for(int i = 0; i < NAVG; i = i + 1)
         // {
-        //     averageSum = averageSum + average[i];
+        //     getReading();
+        //     result = result + ((double)(input - zero)/(double)(vref - zero))*vrefAbs;
         // }
-        // if(averageIndex >= averageLength)
-        // {
-        //     averageIndex = 0;
-        // }
-        // averageSum = averageSum/averageLength;
-        // averageSum = averageSum * vrefAbs;
-        // printf("%+f\n", averageSum);
-        printf("%d, %d, %d, %+03d, %+f\n", zero, vref, input, (zero - input), result);
+        // result = result / NAVG;
+
+        printf("%+f\n", result);
         // sleep_ms(100);
     }
 }
