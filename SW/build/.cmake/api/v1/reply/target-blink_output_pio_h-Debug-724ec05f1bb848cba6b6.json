@@ -1,44 +1,38 @@
 {
-	"backtrace" : 1,
+	"backtrace" : 2,
 	"backtraceGraph" : 
 	{
 		"commands" : 
 		[
 			"add_custom_target",
-			"add_dependencies"
+			"pico_generate_pio_header"
 		],
 		"files" : 
 		[
+			"C:/Program Files/Raspberry Pi/Pico SDK v1.5.1/pico-sdk/tools/CMakeLists.txt",
 			"CMakeLists.txt"
 		],
 		"nodes" : 
 		[
 			{
-				"file" : 0
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 0
 			},
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 54,
-				"parent" : 0
-			},
-			{
-				"command" : 1,
-				"file" : 0,
-				"line" : 57,
-				"parent" : 0
+				"line" : 39,
+				"parent" : 1
 			}
 		]
 	},
-	"dependencies" : 
-	[
-		{
-			"backtrace" : 2,
-			"id" : "blink::@6890427a1f51a3e7e1df"
-		}
-	],
-	"id" : "FinalMessage::@6890427a1f51a3e7e1df",
-	"name" : "FinalMessage",
+	"id" : "blink_output_pio_h::@6890427a1f51a3e7e1df",
+	"name" : "blink_output_pio_h",
 	"paths" : 
 	{
 		"build" : ".",
@@ -57,22 +51,29 @@
 			"name" : "CMake Rules",
 			"sourceIndexes" : 
 			[
-				1
+				1,
+				2
 			]
 		}
 	],
 	"sources" : 
 	[
 		{
-			"backtrace" : 1,
+			"backtrace" : 2,
 			"isGenerated" : true,
-			"path" : "build/CMakeFiles/FinalMessage",
+			"path" : "build/CMakeFiles/blink_output_pio_h",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 0,
 			"isGenerated" : true,
-			"path" : "build/CMakeFiles/FinalMessage.rule",
+			"path" : "build/CMakeFiles/blink_output_pio_h.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/output.pio.h.rule",
 			"sourceGroupIndex" : 1
 		}
 	],

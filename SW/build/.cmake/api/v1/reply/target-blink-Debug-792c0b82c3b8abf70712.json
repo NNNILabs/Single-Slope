@@ -40,7 +40,7 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 41,
+				"line" : 42,
 				"parent" : 0
 			},
 			{
@@ -64,7 +64,7 @@
 			{
 				"command" : 4,
 				"file" : 0,
-				"line" : 33,
+				"line" : 32,
 				"parent" : 0
 			},
 			{
@@ -76,7 +76,7 @@
 			{
 				"command" : 6,
 				"file" : 0,
-				"line" : 38,
+				"line" : 39,
 				"parent" : 0
 			},
 			{
@@ -511,6 +511,10 @@
 				{
 					"backtrace" : 2,
 					"path" : "C:/Program Files/Raspberry Pi/Pico SDK v1.5.1/pico-sdk/src/rp2_common/hardware_pio/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Program Files/Raspberry Pi/Pico SDK v1.5.1/pico-sdk/src/rp2_common/hardware_i2c/include"
 				}
 			],
 			"language" : "CXX",
@@ -922,6 +926,10 @@
 				{
 					"backtrace" : 2,
 					"path" : "C:/Program Files/Raspberry Pi/Pico SDK v1.5.1/pico-sdk/src/rp2_common/hardware_pio/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Program Files/Raspberry Pi/Pico SDK v1.5.1/pico-sdk/src/rp2_common/hardware_i2c/include"
 				}
 			],
 			"language" : "C",
@@ -993,7 +1001,8 @@
 				68,
 				69,
 				70,
-				71
+				71,
+				72
 			]
 		},
 		{
@@ -1387,6 +1396,10 @@
 				{
 					"backtrace" : 2,
 					"path" : "C:/Program Files/Raspberry Pi/Pico SDK v1.5.1/pico-sdk/src/rp2_common/hardware_pio/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Program Files/Raspberry Pi/Pico SDK v1.5.1/pico-sdk/src/rp2_common/hardware_i2c/include"
 				}
 			],
 			"language" : "ASM",
@@ -2326,7 +2339,8 @@
 				68,
 				69,
 				70,
-				71
+				71,
+				72
 			]
 		},
 		{
@@ -2779,6 +2793,12 @@
 			"backtrace" : 2,
 			"compileGroupIndex" : 1,
 			"path" : "C:/Program Files/Raspberry Pi/Pico SDK v1.5.1/pico-sdk/src/rp2_common/hardware_pio/pio.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 1,
+			"path" : "C:/Program Files/Raspberry Pi/Pico SDK v1.5.1/pico-sdk/src/rp2_common/hardware_i2c/i2c.c",
 			"sourceGroupIndex" : 0
 		}
 	],

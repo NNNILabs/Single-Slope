@@ -9,14 +9,16 @@
 
 #include "output.pio.h"
 
-#define outputPin   19 // 20ms conversion pulse (TMUX7234 SW2)
-#define inputPin    15 // Pulse in
+#include "lib/i2c_slave.h"
 
-#define inputMuxPin 16 // TMUX7234 SW3
-#define refMuxPin   18 // TMUX7234 SW1
-#define gndMuxPin   17 // TMUX7234 SW4
+#define outputPin   19   // 20ms conversion pulse (TMUX7234 SW2)
+#define inputPin    15   // Pulse in
 
-#define NAVG        20 // Number of readings to average over
+#define inputMuxPin 16   // TMUX7234 SW3
+#define refMuxPin   18   // TMUX7234 SW1
+#define gndMuxPin   17   // TMUX7234 SW4
+
+#define NAVG        1    // Number of readings to average over
 
 PIO pio = pio0;
 uint smCount;
@@ -116,6 +118,8 @@ int main()
 {
     stdio_init_all();
 
+    i2c_init();
+
     // Housekeeping :amsmiles:
     vreg_set_voltage(VREG_VOLTAGE_MAX);
     set_sys_clock_khz(400000, true);
@@ -138,11 +142,6 @@ int main()
     gpio_set_dir(gndMuxPin, GPIO_OUT);
 
     setMuxGnd();
-
-    // Set power supply to PWM mode
-    gpio_init(23);
-    gpio_set_dir(23, GPIO_OUT);
-    gpio_put(23, 1);
     
     smCount = pio_claim_unused_sm(pio, true);
     offsetCount = pio_add_program(pio, &count_program);
@@ -150,30 +149,38 @@ int main()
     count_program_init(pio, smCount, offsetCount, inputPin, outputPin, divCount);
     pio_sm_set_enabled(pio, smCount, true);
 
-    multicore_launch_core1(core2);
+    // multicore_launch_core1(core2);
 
-    uint32_t newInput = 0;
-    char inputBuffer[32] = {0};
+    // Uncomment for operation over serial
+    // uint32_t newInput = 0;
+    // char inputBuffer[32] = {0};
 
     while (true) 
     {
 
-        newInput = scanf("%s", &inputBuffer, 31);
+        // Uncomment for operation over serial
+        // newInput = scanf("%s", &inputBuffer, 31);
 
-        getReading();
+        // getReading();
 
-        result = 0.0;
-        result = ((double)(input - zero)/(double)(vref - zero))*vrefAbs;
-        result = result * -1;
+        if(regs.conversionStatus == 1)
+        {
+            result = 0.0;
 
-        // for(int i = 0; i < NAVG; i = i + 1)
-        // {
-        //     getReading();
-        //     result = result + ((double)(input - zero)/(double)(vref - zero))*vrefAbs;
-        // }
-        // result = result / NAVG;
+            for(int i = 0; i < NAVG; i = i + 1)
+            {
+                getReading();
+                result = result + ((double)(input - zero)/(double)(vref - zero))*vrefAbs;
+            }
+            result = result / NAVG;
 
-        printf("%+f\n", result);
+            // getReading();
+            // result = result + ((double)(input - zero)/(double)(vref - zero))*vrefAbs;
+            
+            result = result * -1;
+            regs.output = result;
+            regs.conversionStatus = 0;
+        }
         
         // sleep_ms(500);
     }

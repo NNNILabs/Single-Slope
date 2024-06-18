@@ -13,13 +13,13 @@ echo %errorlevel%
 if "%errorlevel%"=="0" goto success
 
 set /a loop=%loop%+1 
-if "%loop%"=="10" goto fail
+if "%loop%"=="3" goto fail
 
 timeout 1 > NUL
 goto loop
 
 :fail
-echo failed to programm
+echo failed to program
 timeout 1 > NUL
 exit
 

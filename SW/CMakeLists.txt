@@ -28,11 +28,12 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/lib
 )
 
-
 # Create C header file with the name <pio program>.pio.h
 pico_generate_pio_header(${PROJECT_NAME}  
         ${CMAKE_CURRENT_LIST_DIR}/output.pio
 )
+
+AUX_SOURCE_DIRECTORY(lib SUB_SOURCES)
 
 # Create map/bin/hex/uf2 files
 pico_add_extra_outputs(${PROJECT_NAME})
@@ -45,6 +46,8 @@ target_link_libraries(${PROJECT_NAME}
     hardware_clocks
     hardware_vreg
     hardware_gpio
+    hardware_i2c
+    hardware_irq
 )
 
 # Enable usb output, disable uart output
