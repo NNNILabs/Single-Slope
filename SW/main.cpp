@@ -21,9 +21,9 @@
 #define NAVG        1    // Number of readings to average over
 
 // read and mux settling times (us), should add up to ramp time x 2
-#define READ_INTERVAL   1100
-#define TSET_BEFORE       50
-#define TSET_AFTER       850
+#define READ_INTERVAL   5100  // Ramp time + a little more before reading from the state machine
+#define TSET_BEFORE       50  // Time before mux switching
+#define TSET_AFTER      4850  // Time after mux switching
 
 PIO pio = pio0;
 uint smCount;
@@ -37,7 +37,7 @@ double result = 0.0;
 double vrefAbs = 7.06004;
 
 // 1 count = 10ns
-uint32_t pulseWidth = 100000;
+uint32_t pulseWidth = 500000;
 
 void setMuxIn()
 {
@@ -167,31 +167,31 @@ int main()
         // Uncomment for operation over serial
         // newInput = scanf("%s", &inputBuffer, 31);
 
-        getReading();
+        // getReading();
 
         // I2C operation
 
-        // if(regs.conversionStatus == 1)
-        // {
-        //     result = 0.0;
+        if(regs.conversionStatus == 1)
+        {
+            result = 0.0;
 
-        //     for(int i = 0; i < NAVG; i = i + 1)
-        //     {
-        //         getReading();
-        //         result = result + ((double)(input - zero)/(double)(vref - zero))*vrefAbs;
-        //     }
-        //     result = result / NAVG;
+            for(int i = 0; i < NAVG; i = i + 1)
+            {
+                getReading();
+                result = result + ((double)(input - zero)/(double)(pulseWidth))*vrefAbs;
+            }
+            result = result / NAVG;
 
-        //     // getReading();
-        //     // result = result + ((double)(input - zero)/(double)(vref - zero))*vrefAbs;
+            // getReading();
+            // result = result + ((double)(input - zero)/(double)(vref - zero))*vrefAbs;
             
-        //     result = result * -1;
-        //     regs.output = result;
-        //     regs.conversionStatus = 0;
-        // }
+            result = result * -1;
+            regs.output = result;
+            regs.conversionStatus = 0;
+        }
         
         // delay for debugging
 
-        sleep_ms(100);
+        // sleep_ms(100);
     }
 }
