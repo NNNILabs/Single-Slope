@@ -20,6 +20,11 @@
 
 #define NAVG        1    // Number of readings to average over
 
+// read and mux settling times (us), should add up to ramp time x 2
+#define READ_INTERVAL   1100
+#define TSET_BEFORE       50
+#define TSET_AFTER       850
+
 PIO pio = pio0;
 uint smCount;
 uint offsetCount;
@@ -31,7 +36,8 @@ int32_t input = 0;
 double result = 0.0;
 double vrefAbs = 7.06004;
 
-uint32_t pulseWidth = 2000000;
+// 1 count = 10ns
+uint32_t pulseWidth = 100000;
 
 void setMuxIn()
 {
@@ -84,27 +90,27 @@ void getReading()
 
     // Reference reading
     pio_sm_put_blocking(pio, smCount, (pulseWidth-1));
-    sleep_ms(30);
+    sleep_us(READ_INTERVAL);
     zero = ~pio_sm_get_blocking(pio, smCount);
-    sleep_ms(5);
+    sleep_us(TSET_BEFORE);
     setMuxRef();
-    sleep_ms(5);
+    sleep_us(TSET_AFTER);
 
     // Input reading
     pio_sm_put_blocking(pio, smCount, (pulseWidth-1));
-    sleep_ms(30);
+    sleep_us(READ_INTERVAL);
     vref = ~pio_sm_get_blocking(pio, smCount);
-    sleep_ms(5);
+    sleep_us(TSET_BEFORE);
     setMuxIn();
-    sleep_ms(5);
+    sleep_us(TSET_AFTER);
 
     // GND reading
     pio_sm_put_blocking(pio, smCount, (pulseWidth-1));
-    sleep_ms(30);
+    sleep_us(READ_INTERVAL);
     input = ~pio_sm_get_blocking(pio, smCount);
-    sleep_ms(5);
+    sleep_us(TSET_BEFORE);
     setMuxGnd();
-    sleep_ms(5);
+    sleep_us(TSET_AFTER);
 
     gpio_put(25, 0);
 }
@@ -161,27 +167,31 @@ int main()
         // Uncomment for operation over serial
         // newInput = scanf("%s", &inputBuffer, 31);
 
-        // getReading();
+        getReading();
 
-        if(regs.conversionStatus == 1)
-        {
-            result = 0.0;
+        // I2C operation
 
-            for(int i = 0; i < NAVG; i = i + 1)
-            {
-                getReading();
-                result = result + ((double)(input - zero)/(double)(vref - zero))*vrefAbs;
-            }
-            result = result / NAVG;
+        // if(regs.conversionStatus == 1)
+        // {
+        //     result = 0.0;
 
-            // getReading();
-            // result = result + ((double)(input - zero)/(double)(vref - zero))*vrefAbs;
+        //     for(int i = 0; i < NAVG; i = i + 1)
+        //     {
+        //         getReading();
+        //         result = result + ((double)(input - zero)/(double)(vref - zero))*vrefAbs;
+        //     }
+        //     result = result / NAVG;
+
+        //     // getReading();
+        //     // result = result + ((double)(input - zero)/(double)(vref - zero))*vrefAbs;
             
-            result = result * -1;
-            regs.output = result;
-            regs.conversionStatus = 0;
-        }
+        //     result = result * -1;
+        //     regs.output = result;
+        //     regs.conversionStatus = 0;
+        // }
         
-        // sleep_ms(500);
+        // delay for debugging
+
+        sleep_ms(100);
     }
 }
