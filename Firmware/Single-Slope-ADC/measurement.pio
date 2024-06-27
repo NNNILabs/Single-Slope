@@ -1,0 +1,35 @@
+.program pio_edge_measurement
+.define public INT_RESET_INPUT_PIN 12
+.define public COMPARATOR_PIN 11
+.wrap_target
+    wait 1 gpio INT_RESET_INPUT_PIN   // Wait for pin to go high
+    mov x !null                 // Reset the counter to (2^32)-1
+    wait 0 gpio INT_RESET_INPUT_PIN   // Wait for pin to go low (to trigger measurement start) 
+count:                          // Start counting  
+    jmp x-- countdest           // Decrement counter
+countdest: 
+    jmp pin count               // Jump if COMPARATOR_PIN high
+    mov isr x                   // Move X to ISR, ready to be pushed
+    push
+.wrap
+
+% c-sdk {
+
+static inline void pio_edge_measurement_program_init(PIO pio, uint sm)
+{
+    uint offset = pio_add_program(pio, &pio_edge_measurement_program);
+
+    // pio_gpio_init only needed for output
+    //pio_gpio_init(pio, pio_edge_measurement_COMPARATOR_PIN);                                 // Comparator pin. Falling edge stops the count.
+    //pio_gpio_init(pio, pio_edge_measurement_INT_RESET_INPUT_PIN);                                  // Integrator reset pin. Falling edge starts the count.
+    //pio_sm_set_consecutive_pindirs(pio, sm, pio_edge_measurement_COMPARATOR_PIN, 2, false);  // Set 2 pins to input
+
+    pio_sm_config c = pio_edge_measurement_program_get_default_config(offset);
+    //sm_config_set_in_pins(&c, pio_edge_measurement_INT_RESET_INPUT_PIN);
+    sm_config_set_jmp_pin(&c, pio_edge_measurement_COMPARATOR_PIN);                          // for JMP
+    sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_RX);                      // We only push, so double the FIFO depth
+    pio_sm_init(pio, sm, offset, &c);
+    pio_sm_set_enabled(pio, sm, true);
+}
+
+%}

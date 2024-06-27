@@ -1,0 +1,8 @@
+{
+    "cmake.buildBeforeRun": true,
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "files.associations": {
+        "stdlib.h": "c",
+        "pwm.h": "c"
+    }
+}
