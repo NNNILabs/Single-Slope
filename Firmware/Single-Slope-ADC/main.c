@@ -9,13 +9,17 @@
 #define CHARGE_PUMP_PIN 13
 #define INT_RESET_OUTPUT_PIN 14
 #define COMPARATOR_PIN 11
-#define INPUT_MUX_PIN 16
+
+#define IN_MUX_PIN 16
+#define CAL_MUX_PIN 17
 
 #define CHARGE_PUMP_PERIOD 666  // 666 = 1.5kHz
 #define INT_RESET_PERIOD 20000  // 20000 = 50Hz
  
 #define PWM_PERIOD 50
 #define PWM_GAP 5
+
+#define PWM_DIVIDER 252.0f
 
 uint slice_num;
 uint chan_num;
@@ -24,16 +28,31 @@ int pwmSum = 0;
 
 PIO pio = pio0;
 
-uint32_t ref0v = 512110;
-uint32_t ref7v = 750636;
+//uint32_t ref0v = 512110;  // 200MHz
+//uint32_t ref0v = 122841;  // 48MHz
+//uint32_t ref0v = 491302;    //196MHz
+//uint32_t ref0v = 644717;    //252MHz
+//uint32_t ref0v = 638324;    //252MHz with 12V ramps
+//uint32_t ref7v = 750636;  // 200MHz
+//uint32_t ref7v = 180092;  // 48MHz
+//uint32_t ref7v = 720279;  //196MHz
+//uint32_t ref7v = 945197;  //252MHz
+//uint32_t ref7V = 1010231; //252MHz with 12V ramps
+uint32_t ref0v = 0;
+uint32_t ref7v = 0;
+
 
 float ref7V_value = 7.05f;
-float volt_per_count = 0.0000295565263326f;  // ref7v_value / ref7v_count
+//float volt_per_count = 0.0000295565263326f;  // ref7v_value / ref7v_count 200MHz
+//float volt_per_count = 0.000123141953852f;  // ref7v_value / ref7v_count 48MHz
+//float volt_per_count = 0.0000307891185578f;      // 196MHz
+//float volt_per_count = 0.0000234624600639f;
+float volt_per_count = 0.0000189563519912f;
 
 int sumCount = 0;
-float sum = 0;;
+float sum = 0;
 
-bool muxState = 1;      // 0 = 0V, 1 = IN
+int muxState = 0;
 
 void on_pwm_wrap()
 {
@@ -41,29 +60,44 @@ void on_pwm_wrap()
     // Clear the interrupt flag that brought us here
     pwm_clear_irq(pwm_gpio_to_slice_num(INT_RESET_OUTPUT_PIN));
 
-    if(muxState)
+    muxState++;
+    if(muxState == 3)
     {
-        muxState = 0;
-    }
-    else
-    {
-        muxState = 1;
+        muxState = 0;   
     }
 
-    gpio_put(INPUT_MUX_PIN, muxState);
+    switch(muxState)    // 0 = 0V, 1 = REF, 2 = IN
+    {
+        case 0:
+            gpio_put(IN_MUX_PIN, 0);
+            gpio_put(CAL_MUX_PIN, 1);
+            break;
+        case 1:
+            gpio_put(IN_MUX_PIN, 0);
+            gpio_put(CAL_MUX_PIN, 0);
+            break;
+        case 2:
+            gpio_put(IN_MUX_PIN, 1);
+            gpio_put(CAL_MUX_PIN, 1);
+            break;
+    }
 }
 
 void core1_entry()
 {
-    gpio_init(INPUT_MUX_PIN);
-    gpio_set_dir(INPUT_MUX_PIN, GPIO_OUT);
-    gpio_put(INPUT_MUX_PIN, muxState);   // 0 = 0V, 1 = IN
+    gpio_init(IN_MUX_PIN);
+    gpio_set_dir(IN_MUX_PIN, GPIO_OUT);
+    gpio_put(IN_MUX_PIN, 0);   // 0 = CAL, 1 = IN
+
+    gpio_init(CAL_MUX_PIN);
+    gpio_set_dir(CAL_MUX_PIN, GPIO_OUT);
+    gpio_put(CAL_MUX_PIN, 1);  // 0 = REF, 1 = 0V
 
     gpio_set_function(CHARGE_PUMP_PIN, GPIO_FUNC_PWM);
     uint slice_num = pwm_gpio_to_slice_num(CHARGE_PUMP_PIN);
     uint chan_num = pwm_gpio_to_channel(CHARGE_PUMP_PIN);
     pwm_config config = pwm_get_default_config();
-    pwm_config_set_clkdiv(&config, 200.0f);
+    pwm_config_set_clkdiv(&config, PWM_DIVIDER);
     pwm_config_set_wrap(&config, CHARGE_PUMP_PERIOD);     //600Hz = 1666, 200Hz = 5000, 833 = 1.2k, 666 = 1.5k
     pwm_config_set_clkdiv_mode(&config, PWM_DIV_FREE_RUNNING);
     pwm_config_set_phase_correct(&config, false);
@@ -73,7 +107,7 @@ void core1_entry()
     gpio_set_function(INT_RESET_OUTPUT_PIN, GPIO_FUNC_PWM);
     slice_num = pwm_gpio_to_slice_num(INT_RESET_OUTPUT_PIN);
     chan_num = pwm_gpio_to_channel(INT_RESET_OUTPUT_PIN);
-    pwm_config_set_clkdiv(&config, 200.0f);
+    pwm_config_set_clkdiv(&config, PWM_DIVIDER);
     pwm_config_set_wrap(&config, INT_RESET_PERIOD);     //600Hz = 1666, 200Hz = 5000, 833 = 1.2k, 666 = 1.5k
     pwm_config_set_clkdiv_mode(&config, PWM_DIV_FREE_RUNNING);
     pwm_config_set_phase_correct(&config, false);
@@ -93,28 +127,37 @@ void core1_entry()
     {
         uint32_t value = pio_sm_get_blocking(pio, sm);
         value = 4294967295 - value;
+        //printf("%u\n", value);
+        //printf("muxState: %i %u\n", muxState, value);
 
-        if(muxState == 0)
+        switch(muxState)
         {
-            // 0V
-            ref0v = value;
-        }
-        else
-        {
-            // Input
-            int32_t signedValue = value - ref0v;
-            //printf("%f\n", signedValue * volt_per_count);
+            case 0:
+                ref0v = value;
+                break;
+            case 1:
+                ref7v = value;
+                volt_per_count = 7.05f / (ref7v - ref0v);
+                //printf("volt_per_count: %f\n", volt_per_count);
+                break;
+            case 2:
+                {
+                    // Input
+                    int32_t signedValue = value - ref0v;
+                    printf("%f\n", signedValue * volt_per_count);
 
-            // Optional logic to average multiple samples.
-            // sum += signedValue * volt_per_count;
-            // sumCount++;
-            // if(sumCount == 250)
-            // {           
-            // printf("%f\n", sum / 250.0f);
-            //   sumCount = 0;
-            //   sum = 0;
-            // }
-        }    
+                    // Optional logic to average multiple samples.
+                    //sum += signedValue * volt_per_count;
+                    //sumCount++;
+                    //if(sumCount == 5)
+                    //{           
+                    //  printf("%f\n", sum / 5.0f);
+                    //  sumCount = 0;
+                    //  sum = 0;
+                    //}
+                    break;
+                }
+        } 
     }  
 }
 
@@ -128,7 +171,9 @@ void main()
     gpio_set_dir(23, GPIO_OUT);
     gpio_put(23, 1);
 
-    set_sys_clock_khz(200000, true);
+    //set_sys_clock_khz(196000, true);
+    set_sys_clock_khz(252000, true);
+    //set_sys_clock_48mhz();
 
     multicore_launch_core1(core1_entry);
 
