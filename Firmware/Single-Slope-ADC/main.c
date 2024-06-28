@@ -123,7 +123,7 @@ void core1_entry()
             case 1:
                 ref7v = value;
                 volt_per_count = ref7V_value / (ref7v - ref0v);
-                printf("volt_per_count: %f\n", volt_per_count);
+                //printf("volt_per_count: %f\n", volt_per_count);
                 break;
             case 2:
                 {
