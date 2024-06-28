@@ -28,26 +28,11 @@ int pwmSum = 0;
 
 PIO pio = pio0;
 
-//uint32_t ref0v = 512110;  // 200MHz
-//uint32_t ref0v = 122841;  // 48MHz
-//uint32_t ref0v = 491302;    //196MHz
-//uint32_t ref0v = 644717;    //252MHz
-//uint32_t ref0v = 638324;    //252MHz with 12V ramps
-//uint32_t ref7v = 750636;  // 200MHz
-//uint32_t ref7v = 180092;  // 48MHz
-//uint32_t ref7v = 720279;  //196MHz
-//uint32_t ref7v = 945197;  //252MHz
-//uint32_t ref7V = 1010231; //252MHz with 12V ramps
 uint32_t ref0v = 0;
 uint32_t ref7v = 0;
 
-
 float ref7V_value = 7.05f;
-//float volt_per_count = 0.0000295565263326f;  // ref7v_value / ref7v_count 200MHz
-//float volt_per_count = 0.000123141953852f;  // ref7v_value / ref7v_count 48MHz
-//float volt_per_count = 0.0000307891185578f;      // 196MHz
-//float volt_per_count = 0.0000234624600639f;
-float volt_per_count = 0.0000189563519912f;
+float volt_per_count = 0.0f;
 
 int sumCount = 0;
 float sum = 0;
@@ -137,8 +122,8 @@ void core1_entry()
                 break;
             case 1:
                 ref7v = value;
-                volt_per_count = 7.05f / (ref7v - ref0v);
-                //printf("volt_per_count: %f\n", volt_per_count);
+                volt_per_count = ref7V_value / (ref7v - ref0v);
+                printf("volt_per_count: %f\n", volt_per_count);
                 break;
             case 2:
                 {
