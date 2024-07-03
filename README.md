@@ -3,6 +3,6 @@ This repo contains the software I wrote for my protoboard version of the Jim Wil
 
 ![alt text](https://github.com/NNNILabs/Single-Slope/blob/main/Resources/Schematic.PNG "NNNI Schem")
 
-Mark's files can be found (here)[https://github.com/NNNILabs/Single-Slope/tree/macaba].
+Mark's files can be found [here](https://github.com/NNNILabs/Single-Slope/tree/macaba).
 
-Jaromir's files can be found (here)[].
+Jaromir's files can be found [here]().
