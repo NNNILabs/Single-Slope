@@ -5,4 +5,4 @@ This repo contains the software I wrote for my protoboard version of the Jim Wil
 
 Mark's files can be found [here](https://github.com/NNNILabs/Single-Slope/tree/macaba).
 
-Jaromir's files can be found [here]().
+Jaromir's files can be found [here](https://github.com/jaromir-sukuba/single-slope-adc).
